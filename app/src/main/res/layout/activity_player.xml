@@ -64,7 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:id="@+id/imageViewGredinet"
-            android:src="@drawable/gredient_bg"
             android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
@@ -180,8 +179,6 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:id="@+id/SeekBar"
-
-
             android:layout_alignParentBottom="true"/>
 
         <TextView

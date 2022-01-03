@@ -79,7 +79,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyVieHolder>
             super(itemView);
             file_name = itemView.findViewById(R.id.txtSongName);
             singer_name = itemView.findViewById(R.id.txtSingerName);
-            album_art = itemView.findViewById(R.id.imgSong);
+            album_art = itemView.findViewById(R.id.cover_art);
         }
     }
 
