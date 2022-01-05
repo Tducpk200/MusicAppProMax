@@ -6,15 +6,21 @@
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/gredient_bg.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_chevron_left.xml" value="0.14375" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_menu.xml" value="0.26614583333333336" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_more.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_play.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_previous.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_repeat_one.xml" value="0.26614583333333336" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/main_bg.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/tab_indication.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_album_details.xml" value="0.11980749746707194" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_main.xml" value="0.16983695652173914" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.264" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/album_item.xml" value="0.11980749746707194" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_album.xml" value="0.11980749746707194" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_songs.xml" value="0.1" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/music_item.xml" value="0.12132725430597771" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/music_item.xml" value="0.4" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/popup.xml" value="0.1814814814814815" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/search.xml" value="0.1814814814814815" />
       </map>
     </option>
   </component>

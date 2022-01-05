@@ -3,6 +3,8 @@ package com.example.musicapppromax.Activity;
 import static com.example.musicapppromax.Activity.MainActivity.musicFiles;
 import static com.example.musicapppromax.Activity.MainActivity.repeatBoolean;
 import static com.example.musicapppromax.Activity.MainActivity.shuffleBoolean;
+import static com.example.musicapppromax.Adapter.AlbumDetailsAdapter.albumFiles;
+import static com.example.musicapppromax.Adapter.MusicAdapter.mFiles;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,15 +41,16 @@ import java.util.Random;
 public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
     TextView txtSongName, txtSingerName, duration_Total, duration_Player;
-    ImageView cover_art, btnNext, btnBack, btnShuffle, btnRepeat,btnPrev;
+    ImageView cover_art, btnNext, btnBack, btnShuffle, btnRepeat, btnPrev;
     FloatingActionButton btnPlayPause;
     SeekBar seekBar;
     int position = -1;
-    static  ArrayList<MusicFiles> listSongs = new ArrayList<>();
+    static ArrayList<MusicFiles> listSongs = new ArrayList<>();
     static Uri uri;
     static MediaPlayer mediaPlayer;
     private Handler handler = new Handler();
     private Thread playThread, prevThread, nextThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                if(mediaPlayer != null & fromUser){
+                if (mediaPlayer != null & fromUser) {
                     mediaPlayer.seekTo(progress * 1000);
                 }
             }
@@ -79,7 +82,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         PlayerActivity.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mediaPlayer != null){
+                if (mediaPlayer != null) {
                     int mCurrentPosition = mediaPlayer.getCurrentPosition() / 1000;
                     seekBar.setProgress(mCurrentPosition);
                     duration_Total.setText(formattedTime(mCurrentPosition));
@@ -91,11 +94,10 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         btnShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(shuffleBoolean){
+                if (shuffleBoolean) {
                     shuffleBoolean = false;
                     btnShuffle.setBackgroundResource(R.drawable.ic_shuffle);
-                }
-                else {
+                } else {
                     shuffleBoolean = true;
                     btnShuffle.setBackgroundResource(R.drawable.ic_shuffle_blue);
                 }
@@ -105,11 +107,10 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(repeatBoolean){
+                if (repeatBoolean) {
                     repeatBoolean = false;
                     btnRepeat.setBackgroundResource(R.drawable.ic_repeat);
-                }
-                else {
+                } else {
                     repeatBoolean = true;
                     btnRepeat.setBackgroundResource(R.drawable.ic_repeat_one);
                 }
@@ -117,23 +118,22 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         });
     }
 
-    private  String formattedTime(int mCurrentPosition){
+    private String formattedTime(int mCurrentPosition) {
         String totalOut = "";
-        String totalNew ="";
+        String totalNew = "";
         String seconds = String.valueOf(mCurrentPosition % 60);
-        String mimites = String.valueOf(mCurrentPosition  / 60);
+        String mimites = String.valueOf(mCurrentPosition / 60);
         totalOut = mimites + ":" + seconds;
         totalNew = mimites + ";" + "0" + seconds;
-        if(seconds.length() == 1){
-            return  totalNew;
-        }
-        else {
+        if (seconds.length() == 1) {
+            return totalNew;
+        } else {
             return totalOut;
 
         }
     }
 
-    private void initViews(){
+    private void initViews() {
         txtSongName = findViewById(R.id.txtSongName);
         txtSingerName = findViewById(R.id.txtSingerName);
         duration_Total = findViewById(R.id.txtDurationTotal);
@@ -148,21 +148,26 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         seekBar = findViewById(R.id.SeekBar);
     }
 
-    private void getIntentMethod(){
+    private void getIntentMethod() {
 
         position = getIntent().getIntExtra("position", -1);
-        listSongs = musicFiles;
-        if(listSongs != null){
+        String sender = getIntent().getStringExtra("sender");
+        if(sender != null && sender.equals("albumDetails")){
+            listSongs = albumFiles;
+        }
+        else {
+            listSongs = mFiles;
+        }
+        if (listSongs != null) {
             btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             uri = Uri.parse(listSongs.get(position).getPath());
         }
-        if(mediaPlayer != null){
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             mediaPlayer.start();
-        }
-        else{
+        } else {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             mediaPlayer.start();
         }
@@ -170,21 +175,21 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         metaData(uri);
     }
 
-    private  void metaData (Uri uri){
+    private void metaData(Uri uri) {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri.toString());
         int durationTotal = Integer.parseInt(listSongs.get(position).getDuration()) / 1000;
         duration_Total.setText(formattedTime(durationTotal));
         byte[] art = retriever.getEmbeddedPicture();
         Bitmap bitmap;
-        if(art != null){
-            bitmap = BitmapFactory.decodeByteArray(art, 0 , art.length);
+        if (art != null) {
+            bitmap = BitmapFactory.decodeByteArray(art, 0, art.length);
             ImageAnimation(this, cover_art, bitmap);
             Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                 @Override
                 public void onGenerated(@Nullable Palette palette) {
                     Palette.Swatch swatch = palette.getDominantSwatch();
-                    if( swatch != null){
+                    if (swatch != null) {
                         ImageView grendient = findViewById(R.id.cover_art);
                         RelativeLayout mContainer = findViewById(R.id.mContainer);
                         grendient.setBackgroundResource(R.drawable.gredient_bg);
@@ -197,8 +202,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                         mContainer.setBackground(gradientDrawableBg);
                         txtSongName.setTextColor(swatch.getTitleTextColor());
                         txtSingerName.setTextColor(swatch.getBodyTextColor());
-                    }
-                    else{
+                    } else {
                         ImageView grendient = findViewById(R.id.cover_art);
                         RelativeLayout mContainer = findViewById(R.id.mContainer);
                         grendient.setBackgroundResource(R.drawable.gredient_bg);
@@ -214,8 +218,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                     }
                 }
             });
-        }
-        else {
+        } else {
             Glide.with(this)
                     .asBitmap()
                     .load(R.drawable.background_new_year_horenito)
@@ -240,8 +243,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     }
 
     private void playThread() {
-        playThread = new Thread()
-        {
+        playThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -258,24 +260,22 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     private void btnPlayClicked() {
 
-        if(mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             btnPlayPause.setBackgroundResource(R.drawable.ic_play);
             mediaPlayer.pause();
-            seekBar.setMax(mediaPlayer.getDuration() / 1000) ;
+            seekBar.setMax(mediaPlayer.getDuration() / 1000);
 
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
                     handler.postDelayed(this, 1000);
                 }
             });
-        }
-
-        else {
+        } else {
             btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             mediaPlayer.start();
             seekBar.setMax(mediaPlayer.getDuration() / 1000);
@@ -283,7 +283,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
@@ -295,10 +295,9 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     }
 
-    private void nextThread(){
+    private void nextThread() {
 
-        nextThread = new Thread()
-        {
+        nextThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -314,13 +313,12 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     }
 
     private void btnNextClicked() {
-        if(mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            if(shuffleBoolean && repeatBoolean){
+            if (shuffleBoolean && repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
-            }
-            else if (!shuffleBoolean && !repeatBoolean){
+            } else if (!shuffleBoolean && !repeatBoolean) {
                 position = (position + 1) % listSongs.size();
             }
             uri = Uri.parse(listSongs.get(position).getPath());
@@ -333,7 +331,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
@@ -344,15 +342,12 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             mediaPlayer.start();
 
-        }
-
-        else {
+        } else {
             mediaPlayer.stop();
             mediaPlayer.release();
-            if(shuffleBoolean && repeatBoolean){
+            if (shuffleBoolean && repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
-            }
-            else if (!shuffleBoolean && !repeatBoolean){
+            } else if (!shuffleBoolean && !repeatBoolean) {
                 position = (position + 1) % listSongs.size();
             }
             uri = Uri.parse(listSongs.get(position).getPath());
@@ -365,7 +360,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
@@ -384,9 +379,8 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         return random.nextInt(i + 1);
     }
 
-    private void prevThread(){
-        prevThread = new Thread()
-        {
+    private void prevThread() {
+        prevThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -403,14 +397,13 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     private void btnPrevClicked() {
 
-        if(mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            if(shuffleBoolean && repeatBoolean){
+            if (shuffleBoolean && repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
-            }
-            else if (!shuffleBoolean && !repeatBoolean){
-                position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1 ));
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1));
             }
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
@@ -422,7 +415,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
@@ -433,16 +426,13 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             mediaPlayer.start();
 
-        }
-
-        else {
+        } else {
             mediaPlayer.stop();
             mediaPlayer.release();
-            if(shuffleBoolean && repeatBoolean){
+            if (shuffleBoolean && repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
-            }
-            else if (!shuffleBoolean && !repeatBoolean){
-                position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1 ));
+            } else if (!shuffleBoolean && !repeatBoolean) {
+                position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1));
             }
             uri = Uri.parse(listSongs.get(position).getPath());
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
@@ -454,7 +444,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer != null){
+                    if (mediaPlayer != null) {
                         int mCurrnetPosition = mediaPlayer.getCurrentPosition() / 1000;
                         seekBar.setProgress(mCurrnetPosition);
                     }
@@ -468,7 +458,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
 
     }
 
-    public void ImageAnimation(Context context, ImageView imageView, Bitmap bitmap){
+    public void ImageAnimation(Context context, ImageView imageView, Bitmap bitmap) {
         Animation animOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
         Animation animIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
         animOut.setAnimationListener(new Animation.AnimationListener() {
@@ -511,7 +501,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     @Override
     public void onCompletion(MediaPlayer mp) {
         btnNextClicked();
-        if(mediaPlayer != null){
+        if (mediaPlayer != null) {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(this);

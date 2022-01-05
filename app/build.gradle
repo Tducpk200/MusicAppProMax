@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 28
 
     defaultConfig {
         applicationId "com.example.musicapppromax"
-        minSdk 31
+        minSdk 28
         targetSdk 31
         versionCode 1
         versionName "1.0"
