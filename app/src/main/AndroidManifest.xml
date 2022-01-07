@@ -4,8 +4,10 @@
     package="com.example.musicapppromax">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
+        android:name=".Application.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,8 +20,23 @@
         <activity
             android:name=".Activity.PlayerActivity"
             android:exported="false" />
-        <activity android:name=".Activity.MainActivity$ViewPagerAdapter"
+        <activity
+            android:name=".Activity.MainActivity$ViewPagerAdapter"
             tools:ignore="Instantiatable" />
+
+        <service
+            android:name=".Service.PlayerService"
+            android:enabled="true" />
+
+        <receiver android:name=".NotificationReceiver" android:enabled="true"
+            tools:ignore="IntentFilterExportedReceiver">
+
+            <intent-filter>
+                <action android:name="actionprevious" />
+                <action android:name="actionnext" />
+                <action android:name="actionplay" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
