@@ -29,6 +29,7 @@
             android:enabled="true" />
 
         <receiver android:name=".NotificationReceiver" android:enabled="true"
+            android:exported="false"
             tools:ignore="IntentFilterExportedReceiver">
 
             <intent-filter>

@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,6 +72,7 @@ public class PlayerActivity extends AppCompatActivity
     private Handler handler = new Handler();
     private Thread playThread, prevThread, nextThread;
     PlayerService playerService;
+    private NotificationReceiver notificationReceiver = new NotificationReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,18 @@ public class PlayerActivity extends AppCompatActivity
                 }
             }
         });
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.example.musicapppromax.ACTION_PREV");
+        intentFilter.addAction("com.example.musicapppromax.ACTION_NEXT");
+        intentFilter.addAction("com.example.musicapppromax.ACTION_PLAY");
+        registerReceiver(notificationReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(notificationReceiver);
     }
 
     private String formattedTime(int mCurrentPosition) {
