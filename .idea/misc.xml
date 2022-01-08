@@ -7,14 +7,15 @@
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_chevron_left.xml" value="0.14375" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_menu.xml" value="0.26614583333333336" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_more.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_pause.xml" value="0.2601851851851852" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_play.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_previous.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_repeat_one.xml" value="0.26614583333333336" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/main_bg.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/tab_indication.xml" value="0.1" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_album_details.xml" value="0.11980749746707194" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_album_details.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.264" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.536" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/album_item.xml" value="0.11980749746707194" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_album.xml" value="0.11980749746707194" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_now_playing_bottom.xml" value="0.536" />

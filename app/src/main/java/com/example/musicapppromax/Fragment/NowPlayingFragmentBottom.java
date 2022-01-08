@@ -144,8 +144,8 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
                     Glide.with(getContext()).load(R.drawable.background_new_year_horenito)
                             .into(albumArt);
                 }
-                txtSongName.setText(SONG_NAME_TO_FRAG);
-                txtSingerName.setText(ARTIST_NAME_TO_FRAG);
+                //txtSongName.setText(SONG_NAME_TO_FRAG);
+                //txtSingerName.setText(ARTIST_NAME_TO_FRAG);
                 Intent intent = new Intent(getContext(), PlayerService.class);
                 if(getContext() != null){
                     getContext().bindService(intent, this, Context.BIND_AUTO_CREATE);

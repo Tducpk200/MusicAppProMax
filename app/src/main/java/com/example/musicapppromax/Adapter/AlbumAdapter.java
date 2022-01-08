@@ -25,7 +25,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     private Context mContext;
     View view;
 
-    public AlbumAdapter(ArrayList<MusicFiles> albumFiles, Context mContext) {
+    public AlbumAdapter( Context mContext, ArrayList<MusicFiles> albumFiles) {
         this.albumFiles = albumFiles;
         this.mContext = mContext;
     }
@@ -33,7 +33,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(mContext).inflate(R.layout.album_item, parent, false);
+        view = LayoutInflater.from(mContext).
+                inflate(R.layout.album_item, parent, false);
 
         return new MyHolder(view);
     }

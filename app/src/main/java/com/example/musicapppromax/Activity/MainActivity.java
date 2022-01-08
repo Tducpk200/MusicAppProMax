@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     public static final int REQUEST_CODE = 1;
     public static ArrayList<MusicFiles> musicFiles;
-    static boolean shuffleBoolean = false, repeatBoolean = false;
     public  static  ArrayList<MusicFiles> albums = new ArrayList<>();
     private String MY_SORT_PREF = "SortOder";
     public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";

@@ -1,8 +1,8 @@
 package com.example.musicapppromax.Activity;
 
 import static com.example.musicapppromax.Activity.MainActivity.musicFiles;
-import static com.example.musicapppromax.Activity.MainActivity.repeatBoolean;
-import static com.example.musicapppromax.Activity.MainActivity.shuffleBoolean;
+//import static com.example.musicapppromax.Activity.MainActivity.repeatBoolean;
+//import static com.example.musicapppromax.Activity.MainActivity.shuffleBoolean;
 import static com.example.musicapppromax.Adapter.AlbumDetailsAdapter.albumFiles;
 import static com.example.musicapppromax.Adapter.MusicAdapter.mFiles;
 import static com.example.musicapppromax.Application.ApplicationClass.ACTION_NEXT;
@@ -63,6 +63,7 @@ public class PlayerActivity extends AppCompatActivity
     TextView txtSongName, txtSingerName, duration_Total, duration_Player;
     ImageView cover_art, btnNext, btnBack, btnShuffle, btnRepeat, btnPrev;
     FloatingActionButton btnPlayPause;
+    static boolean shuffleBoolean = false, repeatBoolean = false;
     SeekBar seekBar;
     int position = -1;
     public static ArrayList<MusicFiles> listSongs = new ArrayList<>();
@@ -105,7 +106,7 @@ public class PlayerActivity extends AppCompatActivity
                 if (playerService != null) {
                     int mCurrentPosition = playerService.getCurrentPosition() / 1000;
                     seekBar.setProgress(mCurrentPosition);
-                    duration_Total.setText(formattedTime(mCurrentPosition));
+                    duration_Player.setText(formattedTime(mCurrentPosition));
                 }
                 handler.postDelayed(this, 1000);
             }
@@ -136,7 +137,20 @@ public class PlayerActivity extends AppCompatActivity
                 }
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnBackClicked();
+            }
+        });
     }
+
+    public void btnBackClicked(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
     private String formattedTime(int mCurrentPosition) {
         String totalOut = "";
@@ -258,7 +272,6 @@ public class PlayerActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-
         unbindService(this);
     }
 
@@ -399,7 +412,6 @@ public class PlayerActivity extends AppCompatActivity
 
     private int getRandom(int i) {
         Random random = new Random();
-
         return random.nextInt(i + 1);
     }
 
