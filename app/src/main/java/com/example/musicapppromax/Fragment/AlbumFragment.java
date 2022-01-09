@@ -2,6 +2,7 @@ package com.example.musicapppromax.Fragment;
 
 import static com.example.musicapppromax.Activity.MainActivity.albums;
 import static com.example.musicapppromax.Activity.MainActivity.musicFiles;
+import static com.example.musicapppromax.Adapter.AlbumDetailsAdapter.albumFiles;
 
 import android.os.Bundle;
 

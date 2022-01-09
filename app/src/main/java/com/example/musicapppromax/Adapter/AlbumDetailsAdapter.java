@@ -34,8 +34,8 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(mContext).inflate(R.layout.music_item, parent, false);
-
+        view = LayoutInflater.from(mContext)
+                .inflate(R.layout.music_item, parent, false);
         return new MyHolder(view);
     }
 

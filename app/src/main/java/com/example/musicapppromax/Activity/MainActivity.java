@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 MusicFiles musicFiles = new MusicFiles(path, title, artist, album, duration, id);
                 Log.e("Path : " + path, "Album : " + album);
                 tempAudioList.add(musicFiles);
-                if(duplicate.contains(album)){
+                if(!duplicate.contains(album)){
                     albums.add(musicFiles);
                     duplicate.add(album);
                 }
