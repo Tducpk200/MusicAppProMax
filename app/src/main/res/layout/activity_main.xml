@@ -7,10 +7,26 @@
     android:orientation="vertical">
 
 
+    <RelativeLayout
+        android:id="@+id/relative_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/backgroud_new_year_tiger">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:titleTextColor="#47D9EC"
+            android:background="@android:color/transparent"
+            app:title="TIENDUCSOUND" />
+    </RelativeLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/relative_image"
         android:background="@color/colorPrimaryDark"
         app:tabIndicator="@drawable/tab_indication"
         app:tabIndicatorColor="#009688"
@@ -24,17 +40,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tab_layout"
-        android:layout_alignBottom="@id/frag_bottom_player"/>
+        android:layout_alignBottom="@id/frag_bottom_player" />
 
     <FrameLayout
+        android:id="@+id/frag_bottom_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/frag_bottom_player" >
+        android:onClick="NowPlayingFragmentBottomClicked"
+        android:layout_alignParentBottom="true">
+
         <fragment
+            android:name="com.example.musicapppromax.Fragment.NowPlayingFragmentBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.example.musicapppromax.Fragment.NowPlayingFragmentBottom"
             tools:layout="@layout/fragment_now_playing_bottom">
 
         </fragment>

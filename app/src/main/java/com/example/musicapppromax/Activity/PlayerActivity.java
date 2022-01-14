@@ -13,15 +13,19 @@ import static com.example.musicapppromax.Application.ApplicationClass.CHANNEL_ID
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.palette.graphics.Palette;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,6 +43,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -58,10 +63,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity
-        implements ActionPlaying, ServiceConnection {
+        implements ActionPlaying, ServiceConnection  {
 
     TextView txtSongName, txtSingerName, duration_Total, duration_Player;
-    ImageView cover_art, btnNext, btnBack, btnShuffle, btnRepeat, btnPrev;
+    ImageButton btnNext, btnBack, btnShuffle, btnRepeat, btnPrev;
+    ImageView cover_art;
     FloatingActionButton btnPlayPause;
     static boolean shuffleBoolean = false, repeatBoolean = false;
     SeekBar seekBar;
@@ -72,15 +78,20 @@ public class PlayerActivity extends AppCompatActivity
     private Handler handler = new Handler();
     private Thread playThread, prevThread, nextThread;
     PlayerService playerService;
+    private NotificationReceiver notificationReceiver = new NotificationReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullSreen();
         setContentView(R.layout.activity_player);
-        getSupportActionBar().hide();
         initViews();
         getIntentMethod();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.example.musicapppromax.ACTION_PREV");
+        intentFilter.addAction("com.example.musicapppromax.ACTION_NEXT");
+        intentFilter.addAction("com.example.musicapppromax.ACTION_PLAY");
+        registerReceiver(notificationReceiver, intentFilter);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -144,13 +155,46 @@ public class PlayerActivity extends AppCompatActivity
                 btnBackClicked();
             }
         });
+
+        IntentFilter intentFilterPause = new IntentFilter("PAUSE");
+        IntentFilter intentFilterStop = new IntentFilter("STOP");
+        IntentFilter intentFilterStart = new IntentFilter("START");
+        IntentFilter intentFilterRelease = new IntentFilter("RELEASE");
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilterPause);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilterStop);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilterStart);
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilterRelease);
     }
 
-    public void btnBackClicked(){
+
+    private void stopService() {
+        Intent intent = new Intent(this, PlayerService.class);
+        stopService(intent);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @SuppressLint("UseCompatLoadingForDrawables")
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case "PAUSE":
+                case "RELEASE":
+                case "STOP" :
+                    btnPlayPause.setImageResource(R.drawable.ic_play);
+                    playerService.showNotification(R.drawable.ic_play);
+                    break;
+                case "START":
+                    btnPlayPause.setImageResource(R.drawable.ic_pause);
+                    playerService.showNotification(R.drawable.ic_pause);
+                    break;
+            }
+        }
+    };
+
+    public void btnBackClicked() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 
     private String formattedTime(int mCurrentPosition) {
         String totalOut = "";
@@ -158,7 +202,7 @@ public class PlayerActivity extends AppCompatActivity
         String seconds = String.valueOf(mCurrentPosition % 60);
         String mimites = String.valueOf(mCurrentPosition / 60);
         totalOut = mimites + ":" + seconds;
-        totalNew = mimites + ";" + "0" + seconds;
+        totalNew = mimites + ":" + "0" + seconds;
         if (seconds.length() == 1) {
             return totalNew;
         } else {
@@ -269,6 +313,12 @@ public class PlayerActivity extends AppCompatActivity
         super.onResume();
     }
 
+    /*@Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(this);
+    }*/
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -294,11 +344,8 @@ public class PlayerActivity extends AppCompatActivity
     public void btnPlayClicked() {
 
         if (playerService.isPlaying()) {
-            btnPlayPause.setBackgroundResource(R.drawable.ic_play);
-            playerService.showNotification(R.drawable.ic_play);
             playerService.pause();
             seekBar.setMax(playerService.getDuration() / 1000);
-
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -310,11 +357,9 @@ public class PlayerActivity extends AppCompatActivity
                 }
             });
         } else {
-            playerService.showNotification(R.drawable.ic_pause);
-            btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
+            playerService.showNotification(R.drawable.ic_play);
             playerService.start();
             seekBar.setMax(playerService.getDuration() / 1000);
-
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -325,7 +370,6 @@ public class PlayerActivity extends AppCompatActivity
                     handler.postDelayed(this, 1000);
                 }
             });
-
         }
 
     }
@@ -351,7 +395,7 @@ public class PlayerActivity extends AppCompatActivity
         if (playerService.isPlaying()) {
             playerService.stop();
             playerService.release();
-            if (shuffleBoolean && repeatBoolean) {
+            if (shuffleBoolean && !repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
             } else if (!shuffleBoolean && !repeatBoolean) {
                 position = (position + 1) % listSongs.size();
@@ -362,7 +406,6 @@ public class PlayerActivity extends AppCompatActivity
             txtSongName.setText(listSongs.get(position).getTitle());
             txtSingerName.setText(listSongs.get(position).getArtist());
             seekBar.setMax(playerService.getDuration() / 1000);
-
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -374,14 +417,12 @@ public class PlayerActivity extends AppCompatActivity
                 }
             });
             playerService.OnCompleted();
-            playerService.showNotification(R.drawable.ic_pause);
-            btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             playerService.start();
 
         } else {
             playerService.stop();
             playerService.release();
-            if (shuffleBoolean && repeatBoolean) {
+            if (shuffleBoolean && !repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
             } else if (!shuffleBoolean && !repeatBoolean) {
                 position = (position + 1) % listSongs.size();
@@ -392,7 +433,6 @@ public class PlayerActivity extends AppCompatActivity
             txtSongName.setText(listSongs.get(position).getTitle());
             txtSingerName.setText(listSongs.get(position).getArtist());
             seekBar.setMax(playerService.getDuration() / 1000);
-
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -404,9 +444,6 @@ public class PlayerActivity extends AppCompatActivity
                 }
             });
             playerService.OnCompleted();
-            playerService.showNotification(R.drawable.ic_play);
-            btnPlayPause.setBackgroundResource(R.drawable.ic_play);
-
         }
     }
 
@@ -432,11 +469,10 @@ public class PlayerActivity extends AppCompatActivity
     }
 
     public void btnPrevClicked() {
-
         if (playerService.isPlaying()) {
             playerService.stop();
             playerService.release();
-            if (shuffleBoolean && repeatBoolean) {
+            if (shuffleBoolean && !repeatBoolean) {
                 position = getRandom(listSongs.size() - 1);
             } else if (!shuffleBoolean && !repeatBoolean) {
                 position = ((position - 1) < 0 ? (listSongs.size() - 1) : (position - 1));
@@ -447,7 +483,6 @@ public class PlayerActivity extends AppCompatActivity
             txtSongName.setText(listSongs.get(position).getTitle());
             txtSingerName.setText(listSongs.get(position).getArtist());
             seekBar.setMax(playerService.getDuration() / 1000);
-
             PlayerActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -459,8 +494,6 @@ public class PlayerActivity extends AppCompatActivity
                 }
             });
             playerService.OnCompleted();
-            playerService.showNotification(R.drawable.ic_pause);
-            btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
             playerService.start();
 
         } else {
@@ -490,7 +523,6 @@ public class PlayerActivity extends AppCompatActivity
             });
             playerService.OnCompleted();
             playerService.showNotification(R.drawable.ic_play);
-            btnPlayPause.setBackgroundResource(R.drawable.ic_play);
 
         }
 
@@ -560,8 +592,6 @@ public class PlayerActivity extends AppCompatActivity
     @Override
     public void onServiceDisconnected(ComponentName componentName) {
         playerService = null;
-
     }
-
 
 }

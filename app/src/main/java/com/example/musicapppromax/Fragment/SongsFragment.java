@@ -19,7 +19,7 @@ import com.example.musicapppromax.R;
 public class SongsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    public static  MusicAdapter musicAdapter;
+    public static MusicAdapter musicAdapter;
 
     public SongsFragment() {
         // Required empty public constructor

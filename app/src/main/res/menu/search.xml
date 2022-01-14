@@ -14,17 +14,17 @@
         app:showAsAction="never">
         <menu>
             <item
-                android:title="Tên"
                 android:id="@+id/by_name"
-                app:showAsAction="never"/>
+                android:title="Tên"
+                app:showAsAction="never" />
             <item
-                android:title="Ngày"
                 android:id="@+id/by_date"
-                app:showAsAction="never"/>
+                android:title="Ngày"
+                app:showAsAction="never" />
             <item
-                android:title="Kích cỡ"
                 android:id="@+id/by_size"
-                app:showAsAction="never"/>
+                android:title="Kích cỡ"
+                app:showAsAction="never" />
         </menu>
     </item>
 </menu>

@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <ImageView
             android:id="@+id/img_music"
@@ -23,7 +23,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <TextView
@@ -31,6 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Đây là tên bài hát"
                 android:textColor="@color/colorAccent"
                 android:textSize="25dp" />
@@ -40,20 +42,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Đây là tên ca sĩ"
                 android:textColor="@color/colorAccent"
                 android:textSize="20dp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/menuMore"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:src="@drawable/ic_more" />
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/menuMore"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_more"
+                android:padding="5dp" />
+        </LinearLayout>
 
     </LinearLayout>
 

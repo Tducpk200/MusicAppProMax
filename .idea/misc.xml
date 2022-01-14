@@ -14,10 +14,12 @@
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/main_bg.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/tab_indication.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_album_details.xml" value="0.1" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.536" />
-        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/album_item.xml" value="0.11980749746707194" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.40484429065743943" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_test.xml" value="0.21195652173913043" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/album_item.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_album.xml" value="0.11980749746707194" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_artist.xml" value="0.22871376811594202" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_now_playing_bottom.xml" value="0.536" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_songs.xml" value="0.1" />
         <entry key="..\:/MusicAppProMax/app/src/main/res/layout/music_item.xml" value="0.4" />

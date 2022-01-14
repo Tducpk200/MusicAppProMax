@@ -6,11 +6,14 @@ import static com.example.musicapppromax.Application.ApplicationClass.ACTION_PLA
 import static com.example.musicapppromax.Application.ApplicationClass.ACTION_PREVIOUS;
 import static com.example.musicapppromax.Application.ApplicationClass.CHANNEL_ID_2;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.musicapppromax.ActionPlaying;
 import com.example.musicapppromax.Activity.PlayerActivity;
@@ -46,7 +50,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     public static final String MUSIC_FILE = "STORED_MUSIC";
     public static final String ARTIST_NAME = "ARTIST NAME";
     public static final String SONG_NAME = "SONG NAME";
-
+    private int btnPlayPause;
 
     @Override
     public void onCreate() {
@@ -80,15 +84,12 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         if (actionName != null) {
             switch (actionName) {
                 case "playPause":
-                    Toast.makeText(this, "PlayPause", Toast.LENGTH_SHORT).show();
                     btnPlayPauseClicked();
                     break;
                 case "next":
-                    Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
                     btnNextClicked();
                     break;
                 case "previous":
-                    Toast.makeText(this, "Previous", Toast.LENGTH_SHORT).show();
                     btnPreviousClicked();
                     break;
             }
@@ -116,6 +117,9 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public void start() {
         mediaPlayer.start();
+        Intent intentStart = new Intent("START");
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentStart);
+
     }
 
     public boolean isPlaying() {
@@ -124,10 +128,14 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public void stop() {
         mediaPlayer.stop();
+        Intent intentStop = new Intent("STOP");
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentStop);
     }
 
     public void release() {
         mediaPlayer.release();
+        Intent intentRelease = new Intent("RELEASE");
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentRelease);
     }
 
     public int getDuration() {
@@ -136,6 +144,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public void pause() {
         mediaPlayer.pause();
+        Intent intentPause = new Intent("PAUSE");
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentPause);
     }
 
     public void seekTo(int position) {
@@ -147,7 +157,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         uri = Uri.parse(musicFiles.get(position).getPath());
         SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE)
                 .edit();
-        editor.putString(MUSIC_FILE,uri.toString());
+        editor.putString(MUSIC_FILE, uri.toString());
         editor.putString(ARTIST_NAME, musicFiles.get(position).getArtist());
         editor.putString(SONG_NAME, musicFiles.get(position).getTitle());
         editor.apply();
@@ -163,7 +173,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
+    public void onCompletion(MediaPlayer mp) {
         if (actionPlaying != null) {
             actionPlaying.btnNextClicked();
             if (mediaPlayer != null) {
@@ -185,17 +195,17 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
         Intent prevIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PREVIOUS);
-        PendingIntent prevPending = PendingIntent.getBroadcast(this, 0,
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent prevPending = PendingIntent.getBroadcast(this, 0,
                 prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent pauseIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_PLAY);
-        PendingIntent pausePending = PendingIntent.getBroadcast(this, 0,
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pausePending = PendingIntent.getBroadcast(this, 0,
                 pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent nextIntent = new Intent(this, NotificationReceiver.class)
                 .setAction(ACTION_NEXT);
-        PendingIntent nextPending = PendingIntent.getBroadcast(this, 0,
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent nextPending = PendingIntent.getBroadcast(this, 0,
                 nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         byte[] picture = null;
@@ -221,7 +231,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
                 .setOnlyAlertOnce(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
-        startForeground(0, notification);
+        startForeground(2, notification);
     }
 
     private byte[] getAlbumArt(String uri) {
@@ -232,23 +242,20 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         return art;
     }
 
-    public void btnNextClicked(){
+    public void btnNextClicked() {
         if (actionPlaying != null) {
-
             actionPlaying.btnNextClicked();
         }
     }
 
-    public void btnPreviousClicked(){
+    public void btnPreviousClicked() {
         if (actionPlaying != null) {
-
             actionPlaying.btnPrevClicked();
         }
     }
 
-    public void btnPlayPauseClicked(){
+    public void btnPlayPauseClicked() {
         if (actionPlaying != null) {
-
             actionPlaying.btnPlayClicked();
         }
     }

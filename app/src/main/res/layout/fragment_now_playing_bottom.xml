@@ -18,14 +18,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/background_new_year_horenito" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/next_bottom"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_next" />
+            android:background="@drawable/ic_next" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/play_pause_miniPlayer"

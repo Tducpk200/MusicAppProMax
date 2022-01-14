@@ -89,7 +89,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyVieHolder>
 
     private void deleteFile(int position, View v) {
         Uri contentUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, Long.parseLong(mFiles.get(position).getId()));
-
         File file = new File(mFiles.get(position).getPath());
         boolean deleted = file.delete();
         if (deleted) {

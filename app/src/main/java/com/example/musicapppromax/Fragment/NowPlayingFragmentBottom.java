@@ -1,7 +1,7 @@
 package com.example.musicapppromax.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.musicapppromax.Activity.MainActivity.ARTIST_NAME_TO_FRAG;
+import static com.example.musicapppromax.Activity.MainActivity.ARTIST_TO_FRAG;
 import static com.example.musicapppromax.Activity.MainActivity.PATH_TO_FRAG;
 import static com.example.musicapppromax.Activity.MainActivity.SHOW_MINI_PLAYER;
 import static com.example.musicapppromax.Activity.MainActivity.SONG_NAME_TO_FRAG;
@@ -16,8 +16,10 @@ import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +35,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class NowPlayingFragmentBottom extends Fragment implements ServiceConnection {
 
-    ImageView btnNext, albumArt;
+    ImageButton btnNext;
+    ImageView albumArt;
     TextView txtSingerName, txtSongName;
     FloatingActionButton btnPlayPause;
     View view;
@@ -42,7 +45,8 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
     public static final String MUSIC_FILE = "STORED_MUSIC";
     public static final String ARTIST_NAME = "ARTIST NAME";
     public static final String SONG_NAME = "SONG NAME";
-    public NowPlayingFragmentBottom(){
+
+    public NowPlayingFragmentBottom() {
 
     }
 
@@ -51,7 +55,7 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_now_playing_bottom,
-                container,false);
+                container, false);
         txtSingerName = view.findViewById(R.id.txtSingerName);
         txtSongName = view.findViewById(R.id.txtSongName);
         btnNext = view.findViewById(R.id.next_bottom);
@@ -61,9 +65,9 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Next", Toast.LENGTH_SHORT).show();
-                if(playerService != null){
+                if (playerService != null) {
                     playerService.btnNextClicked();
-                    if(getActivity() != null) {
+                    if (getActivity() != null) {
                         SharedPreferences.Editor editor = getActivity()
                                 .getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE)
                                 .edit();
@@ -79,32 +83,29 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
                         String path = preferences.getString(MUSIC_FILE, null);
                         String artist = preferences.getString(ARTIST_NAME, null);
                         String song_name = preferences.getString(SONG_NAME, null);
-                        if(path != null){
+                        if (path != null) {
                             SHOW_MINI_PLAYER = true;
                             PATH_TO_FRAG = path;
-                            ARTIST_NAME_TO_FRAG = artist;
+                            ARTIST_TO_FRAG = artist;
                             SONG_NAME_TO_FRAG = song_name;
-                        }
-
-                        else {
+                        } else {
                             SHOW_MINI_PLAYER = false;
                             PATH_TO_FRAG = null;
-                            ARTIST_NAME_TO_FRAG = null;
+                            ARTIST_TO_FRAG = null;
                             SONG_NAME_TO_FRAG = null;
                         }
-                        if(SHOW_MINI_PLAYER ){
-                            if(PATH_TO_FRAG != null) {
+                        if (SHOW_MINI_PLAYER) {
+                            if (PATH_TO_FRAG != null) {
                                 byte[] art = getAlbumArt(PATH_TO_FRAG);
-                                if(art != null){
+                                if (art != null) {
                                     Glide.with(getContext()).load(art)
                                             .into(albumArt);
-                                }
-                                else {
+                                } else {
                                     Glide.with(getContext()).load(R.drawable.background_new_year_horenito)
                                             .into(albumArt);
                                 }
-                                txtSongName.setText(SONG_NAME_TO_FRAG);
-                                txtSingerName.setText(ARTIST_NAME_TO_FRAG);
+                                //txtSongName.setText(SONG_NAME_TO_FRAG);
+                                //txtSingerName.setText(ARTIST_TO_FRAG);
                             }
                         }
                     }
@@ -116,38 +117,36 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "PlayPause", Toast.LENGTH_SHORT).show();
-                if(playerService != null){
+                if (playerService != null) {
                     playerService.btnPlayPauseClicked();
-                    if(playerService.isPlaying()){
-                        btnPlayPause.setImageResource(R.drawable.ic_pause);
-                    }
-                    else {
+                    if (playerService.isPlaying()) {
+                        btnPlayPause.setBackgroundResource(R.drawable.ic_pause);
+                    } else {
                         btnPlayPause.setBackgroundResource(R.drawable.ic_play);
                     }
                 }
             }
         });
-        return  view;
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(SHOW_MINI_PLAYER ){
-            if(PATH_TO_FRAG != null) {
+        if (SHOW_MINI_PLAYER ) {
+            if (PATH_TO_FRAG != null) {
                 byte[] art = getAlbumArt(PATH_TO_FRAG);
-                if(art != null){
+                if (art != null) {
                     Glide.with(getContext()).load(art)
                             .into(albumArt);
-                }
-                else {
+                } else {
                     Glide.with(getContext()).load(R.drawable.background_new_year_horenito)
                             .into(albumArt);
                 }
                 //txtSongName.setText(SONG_NAME_TO_FRAG);
-                //txtSingerName.setText(ARTIST_NAME_TO_FRAG);
+                //txtSingerName.setText(ARTIST_TO_FRAG);
                 Intent intent = new Intent(getContext(), PlayerService.class);
-                if(getContext() != null){
+                if (getContext() != null) {
                     getContext().bindService(intent, this, Context.BIND_AUTO_CREATE);
                 }
             }
@@ -155,9 +154,14 @@ public class NowPlayingFragmentBottom extends Fragment implements ServiceConnect
     }
 
     @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        if(getContext() != null){
+        if (getContext() != null && playerService != null) {
             getContext().unbindService(this);
         }
     }
