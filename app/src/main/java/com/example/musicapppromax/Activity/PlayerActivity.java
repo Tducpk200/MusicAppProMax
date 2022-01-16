@@ -4,6 +4,7 @@ import static com.example.musicapppromax.Activity.MainActivity.musicFiles;
 //import static com.example.musicapppromax.Activity.MainActivity.repeatBoolean;
 //import static com.example.musicapppromax.Activity.MainActivity.shuffleBoolean;
 import static com.example.musicapppromax.Adapter.AlbumDetailsAdapter.albumFiles;
+import static com.example.musicapppromax.Adapter.ArtistDetailsAdapter.artistFlies;
 import static com.example.musicapppromax.Adapter.MusicAdapter.mFiles;
 import static com.example.musicapppromax.Application.ApplicationClass.ACTION_NEXT;
 import static com.example.musicapppromax.Application.ApplicationClass.ACTION_PLAY;
@@ -232,7 +233,11 @@ public class PlayerActivity extends AppCompatActivity
         String sender = getIntent().getStringExtra("sender");
         if (sender != null && sender.equals("albumDetails")) {
             listSongs = albumFiles;
-        } else {
+        }
+        if(sender != null && sender.equals("artistDetails")){
+            listSongs = artistFlies;
+        }
+        else {
             listSongs = mFiles;
         }
         if (listSongs != null) {

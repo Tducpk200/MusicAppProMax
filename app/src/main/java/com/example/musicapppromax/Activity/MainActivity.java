@@ -4,6 +4,7 @@ import static com.example.musicapppromax.Service.PlayerService.ARTIST_NAME;
 import static com.example.musicapppromax.Service.PlayerService.MUSIC_FILE;
 import static com.example.musicapppromax.Service.PlayerService.MUSIC_LAST_PLAYED;
 import static com.example.musicapppromax.Service.PlayerService.SONG_NAME;
+import static com.example.musicapppromax.Service.PlayerService.position;
 
 import android.Manifest;
 import android.content.Context;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static final int REQUEST_CODE = 1;
     public static ArrayList<MusicFiles> musicFiles;
     public static ArrayList<MusicFiles> albums = new ArrayList<>();
+    public static ArrayList<MusicFiles> artists = new ArrayList<>();
     private String MY_SORT_PREF = "SortOder";
     public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";
     public static final String MUSIC_FILE = "STORED_MUSIC";
@@ -105,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Bài hát");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Album");
-        viewPagerAdapter.addFragments(new ArtistFragment(),"Nghệ sĩ");
+        viewPagerAdapter.addFragments(new ArtistFragment(), "Nghệ sĩ");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         frameLayout = findViewById(R.id.frag_bottom_player);
@@ -191,7 +193,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     albums.add(musicFiles);
                     duplicate.add(album);
                 }
-
+                if (!duplicate.contains(artist)) {
+                    artists.add(musicFiles);
+                    duplicate.add(artist);
+                }
             }
 
             cursor.close();

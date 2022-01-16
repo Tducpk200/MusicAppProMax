@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicAppProMax">
         <activity
+            android:name=".Activity.ArtistDetails"
+            android:exported="false" />
+        <activity
             android:name=".Activity.AlbumDetails"
             android:exported="false" />
         <activity
@@ -45,6 +48,7 @@
                 <action android:name="actionplay" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".Fragment.NowPlayingFragmentBottom" />
     </application>
 
 </manifest>

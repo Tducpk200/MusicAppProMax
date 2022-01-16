@@ -153,6 +153,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     public void createMediaPlayer(int positionInner) {
+
         position = positionInner;
         uri = Uri.parse(musicFiles.get(position).getPath());
         SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED, MODE_PRIVATE)
