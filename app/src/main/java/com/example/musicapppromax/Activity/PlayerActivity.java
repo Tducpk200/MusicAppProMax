@@ -234,7 +234,7 @@ public class PlayerActivity extends AppCompatActivity
         if (sender != null && sender.equals("albumDetails")) {
             listSongs = albumFiles;
         }
-        if(sender != null && sender.equals("artistDetails")){
+        else if(sender != null && sender.equals("artistDetails")){
             listSongs = artistFlies;
         }
         else {
@@ -276,6 +276,8 @@ public class PlayerActivity extends AppCompatActivity
                         mContainer.setBackground(gradientDrawableBg);
                         txtSongName.setTextColor(swatch.getTitleTextColor());
                         txtSingerName.setTextColor(swatch.getBodyTextColor());
+                        duration_Player.setTextColor(swatch.getTitleTextColor());
+                        duration_Total.setTextColor(swatch.getBodyTextColor());
                     } else {
                         ImageView grendient = findViewById(R.id.cover_art);
                         RelativeLayout mContainer = findViewById(R.id.mContainer);
@@ -289,6 +291,8 @@ public class PlayerActivity extends AppCompatActivity
                         mContainer.setBackground(gradientDrawableBg);
                         txtSongName.setTextColor(Color.WHITE);
                         txtSingerName.setTextColor(Color.DKGRAY);
+                        duration_Player.setTextColor(Color.BLACK);
+                        duration_Total.setTextColor(Color.BLACK);
                     }
                 }
             });

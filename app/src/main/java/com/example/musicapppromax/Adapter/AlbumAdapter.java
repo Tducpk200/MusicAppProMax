@@ -21,8 +21,8 @@ import com.example.musicapppromax.R;
 import java.util.ArrayList;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
-    private ArrayList<MusicFiles> albumFiles;
-    private Context mContext;
+    private final ArrayList<MusicFiles> albumFiles;
+    private final Context mContext;
     View view;
 
     public AlbumAdapter( Context mContext, ArrayList<MusicFiles> albumFiles) {

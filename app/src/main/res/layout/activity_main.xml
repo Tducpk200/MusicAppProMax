@@ -2,38 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
 
     <RelativeLayout
-        android:id="@+id/relative_image"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/backgroud_new_year_tiger">
+        android:id="@+id/relace_image"
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            app:titleTextColor="#47D9EC"
-            android:background="@android:color/transparent"
-            app:title="TIENDUCSOUND" />
+            android:layout_height="60dp"
+            android:background="#E19A95"
+            app:title="TIENDUCSOUND"
+            app:titleTextColor="#000000" />
     </RelativeLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
+        android:layout_below="@id/relace_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relative_image"
-        android:background="@color/colorPrimaryDark"
-        app:tabIndicator="@drawable/tab_indication"
-        app:tabIndicatorColor="#009688"
+        android:background="#FFFFFF"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
         app:tabIndicatorFullWidth="true"
+        style="@style/CustomTabLayout"
         app:tabIndicatorGravity="center"
         app:tabIndicatorHeight="40dp"
-        app:tabTextColor="@color/colorAccent" />
+        app:tabTextColor="@color/colorPrimaryDark"
+        tools:ignore="NotSibling" />
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
@@ -56,6 +59,7 @@
 
         </fragment>
     </FrameLayout>
+
 
 
 </RelativeLayout>

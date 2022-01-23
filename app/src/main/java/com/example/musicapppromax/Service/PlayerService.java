@@ -12,6 +12,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.musicapppromax.ActionPlaying;
@@ -231,6 +233,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setOnlyAlertOnce(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
                 .build();
         startForeground(2, notification);
     }
@@ -260,5 +263,4 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
             actionPlaying.btnPlayClicked();
         }
     }
-
 }

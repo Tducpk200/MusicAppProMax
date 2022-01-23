@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapter.MyHolder> {
     public  static ArrayList<MusicFiles> albumFiles;
-    private Context mContext;
+    private final Context mContext;
     View view;
 
     public AlbumDetailsAdapter(ArrayList<MusicFiles> albumFiles, Context mContext) {
-        this.albumFiles = albumFiles;
+        AlbumDetailsAdapter.albumFiles = albumFiles;
         this.mContext = mContext;
     }
 
@@ -70,7 +70,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
         return albumFiles.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
+    public static class MyHolder extends RecyclerView.ViewHolder {
         ImageView imgAlbum;
         TextView txtAlbumName, txtSingerName;
 

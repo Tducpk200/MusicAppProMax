@@ -1,15 +1,9 @@
 package com.example.musicapppromax.Activity;
 
-import static com.example.musicapppromax.Service.PlayerService.ARTIST_NAME;
-import static com.example.musicapppromax.Service.PlayerService.MUSIC_FILE;
-import static com.example.musicapppromax.Service.PlayerService.MUSIC_LAST_PLAYED;
-import static com.example.musicapppromax.Service.PlayerService.SONG_NAME;
-import static com.example.musicapppromax.Service.PlayerService.position;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,39 +11,42 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.TableLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.musicapppromax.Files.MusicFiles;
 import com.example.musicapppromax.Fragment.AlbumFragment;
 import com.example.musicapppromax.Fragment.ArtistFragment;
+import com.example.musicapppromax.Fragment.PlaylistFragment;
 import com.example.musicapppromax.Fragment.SongsFragment;
-import com.example.musicapppromax.NotificationReceiver;
 import com.example.musicapppromax.R;
-import com.example.musicapppromax.Service.PlayerService;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.NavigableMap;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     public static final int REQUEST_CODE = 1;
     public static ArrayList<MusicFiles> musicFiles;
@@ -108,9 +105,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Bài hát");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Album");
         viewPagerAdapter.addFragments(new ArtistFragment(), "Nghệ sĩ");
+        viewPagerAdapter.addFragments(new PlaylistFragment(), "Playlist");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         frameLayout = findViewById(R.id.frag_bottom_player);
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_song);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_album);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_artist);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_playlist);
 
     }
 
