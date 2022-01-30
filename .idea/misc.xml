@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/MusicAppProMax-main/app/src/main/res/layout/activity_album_details.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/gredient_bg.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_chevron_left.xml" value="0.14375" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_menu.xml" value="0.26614583333333336" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_more.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_pause.xml" value="0.2601851851851852" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_play.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_previous.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/ic_repeat_one.xml" value="0.26614583333333336" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/main_bg.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/radius.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/drawable/tab_indication.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_album_details.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_artist_details.xml" value="0.25" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_details.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_player.xml" value="0.264" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/activity_test.xml" value="0.21195652173913043" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/album_item.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/artist_item.xml" value="0.25" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_album.xml" value="0.11980749746707194" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_artist.xml" value="0.22871376811594202" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_favorite_song.xml" value="0.24954710144927536" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_now_playing_bottom.xml" value="0.536" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_playlist.xml" value="0.24954710144927536" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/fragment_songs.xml" value="0.264" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/messeger_new_playlist.xml" value="0.2" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/music_item.xml" value="0.4" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/nav_header.xml" value="0.1" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/layout/playlist_item.xml" value="0.4" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/nav_menu.xml" value="0.25" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/popup.xml" value="0.1814814814814815" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/search.xml" value="0.1814814814814815" />
+        <entry key="..\:/MusicAppProMax/app/src/main/res/menu/sort.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
